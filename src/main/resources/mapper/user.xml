@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.back.miru.model.dao.UserDAO">
+
+	<select id="idCheck" parameterType="String" resultType="Int">
+		select count(id) from user where id=#{id}
+	</select>
+	
+	<select id="passwordFindCheck" parameterType="User" resultType="Int">
+		select count(id) from user where id=#{id} and name=#{name} and email=#{email}
+	</select>
+	
+	<select id="passwordCheck" parameterType="Map" resultType="int">
+		select count(id) from user where id=#{id} and
+		password=sha2(concat(#{password},(select salt from user where id=#{id})),256)
+	</select>
+
+	<insert id="registerUser" parameterType="Map">
+		insert into user (id, password, name, email, tel, salt) values
+		(#{id}, sha2(concat(#{password},#{salt}),256), #{name}, #{email}, #{tel}, #{salt})
+	</insert>
+	
+	<select id="login" parameterType="map" resultType="User">
+		select * from user where id=#{id} and 
+		password=sha2(concat(#{password},(select salt from user where id=#{id})),256)
+	</select>
+	
+	<update id="updateUser" parameterType="Map">
+		update user set password=sha2(concat(#{password},#{salt}),256), name=#{name}, email=#{email},
+		 tel=#{tel}, salt=#{salt} where id=#{id}
+	</update>
+	
+	<update id="pwUpdate" parameterType="Map">
+		update user set password=sha2(concat(#{password},#{salt}),256), salt=#{salt} 
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="String">
+		delete from user where id=#{id}
+	</delete>
+	
+	<select id="infoUser" parameterType="String" resultType="User">
+		select * from user where id=#{id}
+	</select>
+	
+	
+</mapper>
