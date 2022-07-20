@@ -12,7 +12,7 @@ public interface UserDAO {
 
 	public int idCheck(String id) throws SQLException;
 
-	public int passwordFindCheck(Uconcern.xmlser user) throws SQLException;
+	public int passwordFindCheck(User user) throws SQLException;
 	
 	public int passwordCheck(Map<String, String> map) throws SQLException;
 
