@@ -5,30 +5,6 @@
 <mapper
 	namespace="com.ssafy.happyhouse.model.mapper.ConcernAreaDAO">
 
-	<select id="getSido" resultType="sidoGugunCodeDto">
-		select left(sidoCode,2)
-		sidoCode, sidoName
-		from sidocode
-		order by sidoCode
-	</select>
-
-	<select id="getGugunInSido" parameterType="string"
-		resultType="sidoGugunCodeDto">
-		select left(gugunCode,5) gugunCode, gugunName
-		from guguncode
-		where left(gugunCode,2) = #{sido}
-		order by gugunCode
-	</select>
-
-	<select id="getDongInGugun" parameterType="string"
-		resultType="houseInfoDto">
-		select distinct dongName, dongCode
-		from houseinfo
-		where
-		left(dongCode, 5) = #{gugun}
-		order by dongName
-	</select>
-
 	<select id="selectAllConcernArea" parameterType="string"
 		resultType="ConcernArea">
 		select * from concernarea where id = #{id}
@@ -43,14 +19,6 @@
 	
 	<select id="getTotalCount" parameterType="String" resultType="int">
 		select count(*) from concernarea where id = #{id}
-	</select>
-
-
-	<select id="getAddress" parameterType="String"
-		resultType="String">
-		select concat(sidoName, " ", gugunName, " ", dongName) from
-		dongcode
-		where dongCode = #{dong}
 	</select>
 
 	<insert id="concernAreaInsert" parameterType="map">
