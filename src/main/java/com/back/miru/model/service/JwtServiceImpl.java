@@ -15,175 +15,79 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 @Service
 public class JwtServiceImpl implements JwtService {
 
-	public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
 
-	private static final String SALT = "ssafySecret";
-	private static final int EXPIRE_MINUTES = 60;
+    private static final String SALT = "zizonMITYJS";
+    private static final int EXPIRE_MINUTES = 60;
 
-	@Override
-	public <T> String create(String key, T data, String subject) {
-		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setHeaderParam("regDate", System.currentTimeMillis())
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES)).setSubject(subject)
-				.claim(key, data).signWith(SignatureAlgorithm.HS256, this.generateKey()).compact();
-		return jwt;
-	}
+    @Override
+    public <T> String create(String key, T data, String subject) {
+        String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setHeaderParam("regDate", System.currentTimeMillis()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES)).setSubject(subject).claim(key, data).signWith(SignatureAlgorithm.HS256, this.generateKey()).compact();
+        return jwt;
+    }
 
-	private byte[] generateKey() {
-		byte[] key = null;
-		try {
-			key = SALT.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			if (logger.isInfoEnabled()) {
-				e.printStackTrace();
-			} else {
-				logger.error("Making JWT Key Error ::: {}", e.getMessage());
-			}
-		}
+    private byte[] generateKey() {
+        byte[] key = null;
+        try {
+            key = SALT.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            if (logger.isInfoEnabled()) {
+                e.printStackTrace();
+            } else {
+                logger.error("Making JWT Key Error ::: {}", e.getMessage());
+            }
+        }
+        return key;
+    }
 
-		return key;
-	}
-
-//	전달 받은 토큰이 제대로 생성된것인지 확인 하고 문제가 있다면 UnauthorizedException을 발생.
-	@Override
-	public boolean isUsable(String jwt) {
-		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
-			return true;
-		} catch (Exception e) {
+    //	전달 받은 토큰이 제대로 생성된것인지 확인 하고 문제가 있다면 UnauthorizedException을 발생.
+    @Override
+    public boolean isUsable(String jwt) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
+            return true;
+        } catch (Exception e) {
 //			if (logger.isInfoEnabled()) {
 //				e.printStackTrace();
 //			} else {
-			logger.error(e.getMessage());
+            logger.error(e.getMessage());
 //			}
 //			throw new UnauthorizedException();
 //			개발환경
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	@Override
-	public Map<String, Object> get(String key) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-				.getRequest();
-		String jwt = request.getHeader("access-token");
-		Jws<Claims> claims = null;
-		try {
-			claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
-		} catch (Exception e) {
+    @Override
+    public Map<String, Object> get(String key) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String jwt = request.getHeader("access-token");
+        Jws<Claims> claims = null;
+        try {
+            claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
+        } catch (Exception e) {
 //			if (logger.isInfoEnabled()) {
 //				e.printStackTrace();
 //			} else {
-			logger.error(e.getMessage());
+            logger.error(e.getMessage());
 //			}
-			throw new UnauthorizedException();
+            throw new UnauthorizedException();
 //			개발환경
 //			Map<String,Object> testMap = new HashMap<>();
 //			testMap.put("userid", userid);
 //			return testMap;
-		}
-		Map<String, Object> value = claims.getBody();
-		logger.info("value : {}", value);
-		return value;
-	}
-
-	@Override
-	public String getUserId() {
-		return (String) this.get("user").get("userid");
-	}
-
-    public static interface UserService {
-        int idCheck(String id) throws Exception;
-
-        void registerUser(Map<String, String> map) throws Exception;
-
-        User login(String id, String password) throws Exception;
-
-        int passwordFindCheck(User user) throws Exception;
-
-        int passwordCheck(Map<String, String> map) throws Exception;
-
-        void updateUser(Map<String, String> map) throws Exception;
-
-        int pwUpdate(Map<String, String> map) throws Exception;
-
-        void deleteUser(String id) throws Exception;
-
-        User infoUser(String id) throws Exception;
-
-
+        }
+        Map<String, Object> value = claims.getBody();
+        logger.info("value : {}", value);
+        return value;
     }
 
-    @Service
-    public static class UserServiceImpl implements UserService {
-        private UserDAO userDao;
-
-        private UserServiceImpl(UserDAO userDao) {
-            this.userDao = userDao;
-        }
-
-        @Override
-        public int idCheck(String id) throws Exception {
-            return userDao.idCheck(id);
-        }
-
-        @Override
-        public int passwordFindCheck(User user) throws Exception {
-            return userDao.passwordFindCheck(user);
-        }
-
-        @Override
-        public int passwordCheck(Map<String, String> map) throws Exception {
-            return userDao.passwordCheck(map);
-        }
-
-        @Override
-        public void registerUser(Map<String, String> map) throws Exception {
-            map.put("salt", randomGenerateString());
-            userDao.registerUser(map);
-        }
-
-        @Override
-        public User login(String id, String password) throws Exception {
-            return userDao.login(id, password);
-        }
-
-        @Override
-        public void updateUser(Map<String, String> map) throws Exception {
-            map.put("salt", randomGenerateString());
-            userDao.updateUser(map);
-        }
-
-        @Override
-        public int pwUpdate(Map<String, String> map) throws Exception {
-            map.put("salt", randomGenerateString());
-            userDao.pwUpdate(map);
-            return 1;
-        }
-
-        @Override
-        public void deleteUser(String id) throws Exception {
-            userDao.deleteUser(id);
-        }
-
-        @Override
-        public User infoUser(String id) throws Exception {
-            return userDao.infoUser(id);
-        }
-
-        public String randomGenerateString() {
-            int leftLimit = 48; // numeral '0'
-            int rightLimit = 122; // letter 'z'
-            int targetStringLength = 16;
-            Random random = new Random();
-            String generatedString = random.ints(leftLimit, rightLimit + 1)
-                    .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
-                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-            return generatedString;
-        }
+    @Override
+    public String getUserId() {
+        return (String) this.get("user").get("userid");
     }
 }
