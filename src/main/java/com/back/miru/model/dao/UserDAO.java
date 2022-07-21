@@ -10,31 +10,28 @@ import java.util.Map;
 
 @Mapper
 public interface UserDAO {
+	int checkId(String id) throws SQLException;
 
-    public User login(String id, String password) throws SQLException;
+	void registerUser(Map<String, String> map) throws SQLException;
 
-    public User infoUser(String id) throws SQLException;
+	void updateUser(Map<String, String> map);
 
+	void deleteUser(String id) throws SQLException;
 
-    public int idCheck(String id) throws SQLException;
+	User infoUser(String id) throws SQLException;
 
-    public int passwordFindCheck(User user) throws SQLException;
+	User loginUser(String id, String password) throws SQLException;
 
-    public int passwordCheck(Map<String, String> map) throws SQLException;
+	int checkPasswordFind(User user) throws SQLException;
 
-    public void registerUser(Map<String, String> map) throws SQLException;
+	int checkPassword(Map<String, String> map) throws SQLException;
 
-	public int passwordFindCheck(User user) throws SQLException;
-	
-	public int passwordCheck(Map<String, String> map) throws SQLException;
+	void updatePw(Map<String, String> map);
 
-    public void pwUpdate(Map<String, String> map);
+	List<Interest> getInterestList(String id) throws Exception;
 
-    public void deleteUser(String id) throws SQLException;
+	int registerInterest(Map<String, String> map) throws Exception;
 
-    List<Interest> interestList(String id) throws Exception;
+	int deleteInterest(Map<String, String> map) throws Exception;
 
-    int addInterest(Map<String, String> map) throws Exception;
-
-    int removeInterest(Map<String, String> map) throws Exception;
 }
