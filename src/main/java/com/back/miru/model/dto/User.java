@@ -2,7 +2,7 @@ package com.back.miru.model.dto;
 
 import java.util.List;
 
-public class Member {
+public class User {
 	private String id;
 	private String password;
 	private String name;
@@ -11,12 +11,12 @@ public class Member {
 	private String phone; //tel > phone 으로 바뀜, email 변수 추가
 	private List<Interest> interest;
 
-	public Member() {
+	public User() {
 		super();
 	}
-	
-	public Member(String id, String password, String name, String email, String address, String phone,
-			List<Interest> interest) {
+
+	public User(String id, String password, String name, String email, String address, String phone,
+				List<Interest> interest) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -35,7 +35,7 @@ public class Member {
 		this.interest = interest;
 	}
 
-	public Member(String id, String password, String name, String email, String address, String phone) {
+	public User(String id, String password, String name, String email, String address, String phone) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -93,5 +93,5 @@ public class Member {
 		this.phone = phone;
 	}
 
-	
+
 }
