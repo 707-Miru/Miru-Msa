@@ -7,28 +7,27 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    int idCheck(String id) throws Exception;
+    int checkId(String id) throws Exception;
 
     void registerUser(Map<String, String> map) throws Exception;
 
-    User login(String id, String password) throws Exception;
-
-    int passwordFindCheck(User user) throws Exception;
-
-    int passwordCheck(Map<String, String> map) throws Exception;
-
     void updateUser(Map<String, String> map) throws Exception;
-
-    int pwUpdate(Map<String, String> map) throws Exception;
 
     void deleteUser(String id) throws Exception;
 
     User infoUser(String id) throws Exception;
 
-    List<Interest> interestList(String id) throws Exception;
+    User loginUser(String id, String password) throws Exception;
 
-    boolean addInterest(Map<String, String> map) throws Exception;
+    int checkPasswordFind(User user) throws Exception;
 
-    boolean removeInterest(Map<String, String> map) throws Exception;
+    int checkPassword(Map<String, String> map) throws Exception;
 
+    int updatePw(Map<String, String> map) throws Exception;
+
+    List<Interest> getInterestList(String id) throws Exception;
+
+    boolean resisterInterest(Map<String, String> map) throws Exception;
+
+    boolean deleteInterest(Map<String, String> map) throws Exception;
 }
