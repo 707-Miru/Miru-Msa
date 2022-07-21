@@ -1,23 +1,48 @@
 package com.back.miru.model.dto;
 
-public class User {
+import java.util.List;
+
+public class Member {
 	private String id;
 	private String password;
 	private String name;
 	private String email;
-	private String tel;
+	private String address;
+	private String phone; //tel > phone 으로 바뀜, email 변수 추가
+	private List<Interest> interest;
 
-	public User() {
+	public Member() {
 		super();
 	}
-
-	public User(String id, String password, String name, String email, String tel) {
+	
+	public Member(String id, String password, String name, String email, String address, String phone,
+			List<Interest> interest) {
 		super();
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.email = email;
-		this.tel = tel;
+		this.address = address;
+		this.phone = phone;
+		this.interest = interest;
+	}
+
+	public List<Interest> getInterest() {
+		return interest;
+	}
+
+	public void setInterest(List<Interest> interest) {
+		this.interest = interest;
+	}
+
+	public Member(String id, String password, String name, String email, String address, String phone) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
 	}
 
 	public String getId() {
@@ -52,18 +77,21 @@ public class User {
 		this.email = email;
 	}
 
-	public String getTel() {
-		return tel;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", tel=" + tel
-				+ "]";
+	public String getPhone() {
+		return phone;
 	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	
 }
