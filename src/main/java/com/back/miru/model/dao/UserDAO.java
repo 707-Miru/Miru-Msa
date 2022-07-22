@@ -22,11 +22,7 @@ public interface UserDAO {
 
 	User loginUser(String id, String password) throws SQLException;
 
-	int checkPasswordFind(User user) throws SQLException;
-
-	int checkPassword(Map<String, String> map) throws SQLException;
-
-	void updatePw(Map<String, String> map);
+	int checkPasswordFind(Map<String, String> map) throws SQLException;
 
 	List<Interest> getInterestList(String id) throws Exception;
 

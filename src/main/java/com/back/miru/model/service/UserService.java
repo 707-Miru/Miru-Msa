@@ -19,11 +19,7 @@ public interface UserService {
 
 	User loginUser(String id, String password) throws Exception;
 
-	int checkPasswordFind(User user) throws Exception;
-
-	int checkPassword(Map<String, String> map) throws Exception;
-
-	int updatePw(Map<String, String> map) throws Exception;
+	int checkPasswordFind(String id, Map<String, String> map) throws Exception;
 
 	List<Interest> getInterestList(String id) throws Exception;
 
