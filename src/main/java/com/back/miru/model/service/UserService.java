@@ -9,7 +9,7 @@ import java.util.Map;
 public interface UserService {
 	int checkId(String id) throws Exception;
 
-	void registerUser(Map<String, String> map) throws Exception;
+	void registUser(Map<String, String> map) throws Exception;
 
 	void updateUser(Map<String, String> map) throws Exception;
 
@@ -19,7 +19,7 @@ public interface UserService {
 
 	User loginUser(String id, String password) throws Exception;
 
-	int checkPasswordFind(String id, Map<String, String> map) throws Exception;
+	int checkPasswordFind(String id, String email) throws Exception;
 
 	List<Interest> getInterestList(String id) throws Exception;
 
