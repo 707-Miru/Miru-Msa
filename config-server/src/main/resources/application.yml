@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          searchPaths: service1,service2
+          # Private Git으로 username/password 필요
+#          uri: https://github.com/chanheejung/config-priv-repo/
+#          username: chanheejung
+#          password: ENC(KR3BlZAp1OeJOOwxySqDgxEboxA8DGED) # Jasypt의 암복호화는 bootstrap.xml에서 적용되지 않는다.
+          # Public Git으로 username/password 필요 없음
+          uri: https://github.com/chanheejung/config-repo/
+
+        # File based Properties
+#        native:
+#          searchLocations: file:///D:\devchan\MyStudy\SimpleMSA\config-server\src\main\resources\config\service1,
+#            file:///D:\devchan\MyStudy\SimpleMSA\config-server\src\main\resources\config\service2
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: jasypt_key
