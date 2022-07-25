@@ -41,72 +41,18 @@ public class UserContorller {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> registerUser(@RequestBody Map<String, String> map) throws Exception {
+    public ResponseEntity<Integer> registUser(@RequestBody Map<String, String> map) throws Exception {
         System.out.println("resister controller 시작");
-        userService.registerUser(map);
+        userService.registUser(map);
         return new ResponseEntity<Integer>(1, HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> loginUser(
-            @RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user) {
-        System.out.println("membercontoller 호출");
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-        try {
-            User loginUser = userService.loginUser(user.getId(), user.getPassword());
-            if (loginUser != null) {
-                String token = jwtService.create("userid", loginUser.getId(), "access-token");// key, data, subject
-                logger.debug("로그인 토큰정보 : {}", token);
-                resultMap.put("access-token", token);
-                resultMap.put("message", SUCCESS);
-                status = HttpStatus.ACCEPTED;
-            } else {
-                resultMap.put("message", FAIL);
-                status = HttpStatus.ACCEPTED;
-            }
-        } catch (Exception e) {
-            logger.error("로그인 실패 : {}", e);
-            resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
-    }
-
-    @ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
-    @GetMapping("/info/{userid}")
-    public ResponseEntity<Map<String, Object>> getUserInfo(
-            @PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
-            HttpServletRequest request) {
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = HttpStatus.ACCEPTED;
-        if (jwtService.isUsable(request.getHeader("access-token"))) {
-            logger.info("사용 가능한 토큰!!!");
-            try {
-                User user = userService.infoUser(userid);
-                resultMap.put("userInfo", user);
-                resultMap.put("message", SUCCESS);
-                status = HttpStatus.ACCEPTED;
-            } catch (Exception e) {
-                logger.error("정보조회 실패 : {}", e);
-                resultMap.put("message", e.getMessage());
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
-            }
-        } else {
-            logger.error("사용 불가능 토큰!!!");
-            resultMap.put("message", FAIL);
-            status = HttpStatus.ACCEPTED;
-        }
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
     @ApiOperation(value = "회원정보수정", notes = "", response = Map.class)
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> modifyUser(
+    public ResponseEntity<Map<String, Object>> updateUser(
             @RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) @PathVariable String id,
             @RequestBody Map<String, String> map) {
-        System.out.println("modify User 호출");
+        System.out.println("update User 호출");
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
@@ -149,12 +95,66 @@ public class UserContorller {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Integer> checkPasswordFind(@PathVariable String id, @RequestBody Map<String, String> map) throws Exception {
+    @ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> loginUser(
+            @RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user) {
+        System.out.println("login contoller 호출");
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+        try {
+            User loginUser = userService.loginUser(user.getId(), user.getPassword());
+            if (loginUser != null) {
+                String token = jwtService.create("id", loginUser.getId(), "token");// key, data, subject
+                logger.debug("로그인 토큰정보 : {}", token);
+                resultMap.put("token", token);
+                resultMap.put("message", SUCCESS);
+                status = HttpStatus.ACCEPTED;
+            } else {
+                resultMap.put("message", FAIL);
+                status = HttpStatus.ACCEPTED;
+            }
+        } catch (Exception e) {
+            logger.error("로그인 실패 : {}", e);
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Integer> checkPasswordFind(@PathVariable String id, @RequestParam String email) throws Exception {
         int cnt = 0;
         System.out.println("checkPasswordFind 실행");
-        cnt = userService.checkPasswordFind(id, map);
+        cnt = userService.checkPasswordFind(id, email);
         return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
+    @GetMapping("/info/{id}")
+    public ResponseEntity<Map<String, Object>> getUserInfo(
+            @PathVariable("id") @ApiParam(value = "인증할 회원의 아이디.", required = true) String id,
+            HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status;
+        if (jwtService.isUsable(request.getHeader("token"))) {
+            logger.info("사용 가능한 토큰!!!");
+            try {
+                User user = userService.infoUser(id);
+                resultMap.put("userInfo", user);
+                resultMap.put("message", SUCCESS);
+                status = HttpStatus.ACCEPTED;
+            } catch (Exception e) {
+                logger.error("정보조회 실패 : {}", e);
+                resultMap.put("message", e.getMessage());
+                status = HttpStatus.INTERNAL_SERVER_ERROR;
+            }
+        } else {
+            logger.error("사용 불가능 토큰!!!");
+            resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
+        }
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
     @GetMapping("/interest/{id}")
