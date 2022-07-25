@@ -23,13 +23,13 @@ public class SwaggerConfiguration {
 //	http://localhost:8080/{your-app-root}/swagger-ui/index.html
 
 	private String version = "V1";
-	private String title = "SSAFY HappyHouse API " + version;
+	private String title = "project Miru API " + version;
 	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
-					.apis(RequestHandlerSelectors.basePackage("com.ssafy.happyhouse.controller"))
+					.apis(RequestHandlerSelectors.basePackage("com.back.miru.controller"))
 					.paths(regex("/*.*")).build()
 					.useDefaultResponseMessages(false);
 	}
