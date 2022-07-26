@@ -50,6 +50,13 @@
           AND email = #{email}
     </select>
 
+    <update id="updatePassword" parameterType="Map">
+        UPDATE user
+        SET password=sha2(concat(#{password}, #{salt}), 256),
+            salt=#{salt}
+        WHERE id = #{id}
+    </update>
+
     <select id="getInterestList" resultType="Interest">
         select *
         from interest

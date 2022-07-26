@@ -25,13 +25,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registUser(Map<String, String> map) throws Exception {
-        map.put("salt", randomGenerateString());
+        map.put("salt", randomGenerateString(16));
         userDao.registUser(map);
     }
 
     @Override
     public void updateUser(Map<String, String> map) throws Exception {
-        map.put("salt", randomGenerateString());
+        map.put("salt", randomGenerateString(16));
         userDao.updateUser(map);
     }
 
@@ -59,6 +59,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updatePassword(String id) throws Exception {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("password", randomGenerateString(8));
+        map.put("salt", randomGenerateString(16));
+        userDao.updatePassword(map);
+    }
+
+    @Override
     public boolean resisterInterest(Map<String, String> map) throws Exception {
         return userDao.registerInterest(map) == 1;
     }
@@ -73,10 +82,9 @@ public class UserServiceImpl implements UserService {
         return userDao.getInterestList(id);
     }
 
-    public String randomGenerateString() {
+    public String randomGenerateString(int targetStringLength) {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
-        int targetStringLength = 16;
         Random random = new Random();
         String generatedString = random.ints(leftLimit, rightLimit + 1).filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
         return generatedString;

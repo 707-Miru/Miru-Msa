@@ -14,7 +14,7 @@ public interface UserDAO {
 
 	void registUser(Map<String, String> map) throws SQLException;
 
-	void updateUser(Map<String, String> map);
+	void updateUser(Map<String, String> map) throws SQLException;
 
 	void deleteUser(String id) throws SQLException;
 
@@ -23,6 +23,8 @@ public interface UserDAO {
 	User loginUser(String id, String password) throws SQLException;
 
 	int checkPasswordFind(Map<String, String> map) throws SQLException;
+
+	void updatePassword(Map<String, String> map) throws SQLException;
 
 	List<Interest> getInterestList(String id) throws Exception;
 
