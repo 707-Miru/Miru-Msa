@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.happyhouse.model.mapper.ConcernAreaDAO">
+
+	<select id="selectAllConcernArea" parameterType="string"
+		resultType="ConcernArea">
+		select * from concernarea where id = #{id}
+	</select>
+	
+	<select id="selectConcernArea" parameterType="ListParameterDto"
+		resultType="ConcernArea">
+		select * from concernarea where id = #{id}
+		order by address
+		limit #{start}, #{currentPerPage}
+	</select>
+	
+	<select id="getTotalCount" parameterType="String" resultType="int">
+		select count(*) from concernarea where id = #{id}
+	</select>
+
+	<insert id="concernAreaInsert" parameterType="map">
+		insert into
+		concernarea values (#{id}, #{dongcode}, #{address})
+	</insert>
+
+	<delete id="concernAreaDelete" parameterType="ConcernArea">
+		delete from
+		concernarea where id = #{id} and dongcode = #{dongcode}
+	</delete>
+
+	<select id="listCloud" parameterType="ConcernCloud"
+		resultType="ConcernCloud">
+		select * from concerncloud
+	</select>
+
+	<select id="selectCloud" parameterType="String" resultType="int">
+		select weight from concerncloud where name=#{name}
+	</select>
+
+	<insert id="plusUpdateCloud" parameterType="String">
+		insert into
+		concerncloud values (#{name} , 1)
+		on duplicate key update
+		weight =
+		weight + 1
+	</insert>
+
+	<update id="minusUpdateCloud" parameterType="String">
+		update concerncloud
+		set weight = weight - 1
+		where name=#{name}
+	</update>
+
+	<delete id="deleteCloud" parameterType="String">
+		delete from concerncloud
+		where name = #{name}
+	</delete>
+
+</mapper>
