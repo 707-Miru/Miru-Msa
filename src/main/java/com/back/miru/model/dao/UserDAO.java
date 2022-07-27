@@ -12,7 +12,7 @@ import java.util.Map;
 public interface UserDAO {
 	int checkId(String id) throws SQLException;
 
-	void registerUser(Map<String, String> map) throws SQLException;
+	void registUser(Map<String, String> map) throws SQLException;
 
 	void updateUser(Map<String, String> map);
 
@@ -22,11 +22,7 @@ public interface UserDAO {
 
 	User loginUser(String id, String password) throws SQLException;
 
-	int checkPasswordFind(User user) throws SQLException;
-
-	int checkPassword(Map<String, String> map) throws SQLException;
-
-	void updatePw(Map<String, String> map);
+	int checkPasswordFind(Map<String, String> map) throws SQLException;
 
 	List<Interest> getInterestList(String id) throws Exception;
 
@@ -34,9 +30,4 @@ public interface UserDAO {
 
 	int deleteInterest(Map<String, String> map) throws Exception;
 
-    List<Interest> interestList(String id) throws Exception;
-
-    int addInterest(Map<String, String> map) throws Exception;
-
-    int removeInterest(Map<String, String> map) throws Exception;
 }

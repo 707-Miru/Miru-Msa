@@ -1,174 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-<<<<<<< HEAD
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.back.miru.model.dao.UserDAO">
 
-    <select id="idCheck" parameterType="String" resultType="Int">
-        select count(id)
-        from user
-        where id = #{id}
+    <select id="checkId" parameterType="String" resultType="Int">
+        SELECT count(id)
+        FROM user
+        WHERE id = #{id}
     </select>
 
-    <select id="passwordFindCheck" parameterType="User" resultType="Int">
-        select count(id)
-        from user
-        where id = #{id}
-          and name = #{name}
-          and email = #{email}
-    </select>
-
-    <select id="passwordCheck" parameterType="Map" resultType="int">
-        select count(id)
-        from user
-        where id = #{id}
-          and password = sha2(concat(#{password}, (select salt from user where id = #{id})), 256)
-    </select>
-
-    <insert id="registerUser" parameterType="Map">
-        insert into user (id, password, name, email, tel, salt)
-        values (#{id}, sha2(concat(#{password}, #{salt}), 256), #{name}, #{email}, #{tel}, #{salt})
+    <insert id="registUser" parameterType="Map">
+        INSERT INTO user (id, password, email, recommendFlag, salt)
+        VALUES (#{id}, sha2(concat(#{password}, #{salt}), 256), #{email}, #{recommendFlag}, #{salt})
     </insert>
 
-    <select id="login" parameterType="map" resultType="User">
-        select *
-        from user
-        where id = #{id}
-          and password = sha2(concat(#{password}, (select salt from user where id = #{id})), 256)
-    </select>
-
     <update id="updateUser" parameterType="Map">
-        update user
-        set password=sha2(concat(#{password}, #{salt}), 256),
-            name=#{name},
+        UPDATE user
+        SET password=sha2(concat(#{password}, #{salt}), 256),
             email=#{email},
-            tel=#{tel},
+            recommendFlag=#{recommendFlag},
             salt=#{salt}
-        where id = #{id}
-    </update>
-
-    <update id="pwUpdate" parameterType="Map">
-        update user
-        set password=sha2(concat(#{password}, #{salt}), 256),
-            salt=#{salt}
-        where id = #{id}
+        WHERE id = #{id}
     </update>
 
     <delete id="deleteUser" parameterType="String">
-        delete
-        from user
-        where id = #{id}
+        DELETE
+        FROM user
+        WHERE id = #{id}
     </delete>
 
     <select id="infoUser" parameterType="String" resultType="User">
-        select *
-        from user
-        where id = #{id}
+        SELECT *
+        FROM user
+        WHERE id = #{id}
     </select>
 
-    <select id="interestList" resultType="Interest">
+    <select id="loginUser" parameterType="map" resultType="User">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
+          AND password = sha2(concat(#{password}, (SELECT salt FROM user WHERE id = #{id})), 256)
+    </select>
+
+    <select id="checkPasswordFind" parameterType="User" resultType="Int">
+        SELECT count(id)
+        FROM user
+        WHERE id = #{id}
+          AND email = #{email}
+    </select>
+
+    <select id="getInterestList" resultType="Interest">
         select *
         from interest
         where id = #{id}
     </select>
 
-    <insert id="addInterest" parameterType="map">
+    <insert id="registerInterest" parameterType="map">
         insert into interest(id, dongCode, dongName)
         values (#{id}, #{dongcode}, #{dongname})
     </insert>
 
-    <delete id="removeInterest" parameterType="map">
+    <delete id="deleteInterest" parameterType="map">
         delete
         from interest
         where id = #{id}
           and dongCode = #{dongcode}
     </delete>
 
-=======
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.back.miru.model.dao.UserDAO">
-
-	<select id="checkId" parameterType="String" resultType="Int">
-		select count(id)
-		from user
-		where id = #{id}
-	</select>
-
-	<insert id="registerUser" parameterType="Map">
-		insert into user (id, password, name, email, tel, salt)
-		values (#{id}, sha2(concat(#{password}, #{salt}), 256), #{name}, #{email}, #{tel}, #{salt})
-	</insert>
-
-	<update id="updateUser" parameterType="Map">
-		update user
-		set password=sha2(concat(#{password}, #{salt}), 256),
-			name=#{name},
-			email=#{email},
-			tel=#{tel},
-			salt=#{salt}
-		where id = #{id}
-	</update>
-
-	<delete id="deleteUser" parameterType="String">
-		delete
-		from user
-		where id = #{id}
-	</delete>
-
-	<select id="infoUser" parameterType="String" resultType="User">
-		select *
-		from user
-		where id = #{id}
-	</select>
-
-	<select id="loginUser" parameterType="map" resultType="User">
-		select *
-		from user
-		where id = #{id}
-		  and password = sha2(concat(#{password}, (select salt from user where id = #{id})), 256)
-	</select>
-
-	<select id="checkPasswordFind" parameterType="User" resultType="Int">
-		select count(id)
-		from user
-		where id = #{id}
-		  and name = #{name}
-		  and email = #{email}
-	</select>
-
-	<select id="checkPassword" parameterType="Map" resultType="int">
-		select count(id)
-		from user
-		where id = #{id}
-		  and password = sha2(concat(#{password}, (select salt from user where id = #{id})), 256)
-	</select>
-
-	<update id="updatePw" parameterType="Map">
-		update user
-		set password=sha2(concat(#{password}, #{salt}), 256),
-			salt=#{salt}
-		where id = #{id}
-	</update>
-
-	<select id="getInterestList" resultType="Interest">
-		select *
-		from interest
-		where id = #{id}
-	</select>
-
-	<insert id="registerInterest" parameterType="map">
-		insert into interest(id, dongCode, dongName)
-		values (#{id}, #{dongcode}, #{dongname})
-	</insert>
-
-	<delete id="deleteInterest" parameterType="map">
-		delete
-		from interest
-		where id = #{id}
-		  and dongCode = #{dongcode}
-	</delete>
-
->>>>>>> a156cc9bfb87b00443fc31808187a9d32d7a68da
 </mapper>

@@ -5,6 +5,7 @@ import com.back.miru.model.dto.Interest;
 import com.back.miru.model.dto.User;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -23,9 +24,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(Map<String, String> map) throws Exception {
+    public void registUser(Map<String, String> map) throws Exception {
         map.put("salt", randomGenerateString());
-        userDao.registerUser(map);
+        userDao.registUser(map);
     }
 
     @Override
@@ -50,20 +51,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int checkPasswordFind(User user) throws Exception {
-        return userDao.checkPasswordFind(user);
-    }
-
-    @Override
-    public int checkPassword(Map<String, String> map) throws Exception {
-        return userDao.checkPassword(map);
-    }
-
-    @Override
-    public int updatePw(Map<String, String> map) throws Exception {
-        map.put("salt", randomGenerateString());
-        userDao.updatePw(map);
-        return 1;
+    public int checkPasswordFind(String id, String email) throws Exception {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("email", email);
+        return userDao.checkPasswordFind(map);
     }
 
     @Override
