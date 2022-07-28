@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.back.miru.model.dao.FavoriteDAO">
+
+    <insert id="registFavoriteUser" parameterType="Map">
+        INSERT INTO favoriteUser (id, followId)
+        VALUES (#{id}, #{followId})
+    </insert>
+
+    <delete id="deleteFavoriteUser" parameterType="Map">
+        DELETE
+        FROM favoriteUser
+        WHERE id = #{id} AND followId = #{followId}
+    </delete>
+
+    <select id="infoFavoriteUser" parameterType="String" resultType="Map">
+        SELECT followId
+        FROM favoriteUser
+        WHERE id = #{id}
+    </select>
+
+    <insert id="registFavoritePicture" parameterType="Map">
+        INSERT INTO favoritePicture
+        VALUES (#{id}, #{pictureIdx}, #{pictureOrder})
+    </insert>
+
+    <delete id="deleteFavoritePicture" parameterType="Map">
+        DELETE
+        FROM favoritePicture
+        WHERE id = #{id} AND pictureIdx = #{pictureIdx}
+    </delete>
+
+    <select id="infoFavoritePicture" parameterType="String" resultType="Map">
+        SELECT pictureIdx
+        FROM favoritePicture
+        WHERE id = #{id}
+    </select>
+
+</mapper>

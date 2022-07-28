@@ -1,16 +1,14 @@
 package com.back.miru.model.dto;
 
-public class Favorite {
+public class FavoritePicture {
     private String id;
     private int followId;
     private int order;
-    private String type;
 
-    public Favorite(String id, int followId, int order, String type) {
+    public FavoritePicture(String id, int followId, int order) {
         this.id = id;
         this.followId = followId;
         this.order = order;
-        this.type = type;
     }
 
     public String getId() {
@@ -37,11 +35,4 @@ public class Favorite {
         this.order = order;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }
