@@ -1,0 +1,60 @@
+C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\python.exe C:/Users/SSAFY/AppData/Roaming/JetBrains/IntelliJIdea2022.2/plugins/python/helpers/pydev/pydevconsole.py --mode=client --host=127.0.0.1 --port=52389 
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\SSAFY\\Desktop\\Neural-Style-Transfer', 'C:\\Users\\SSAFY\\Desktop\\Neural-Style-Transfer', 'C:\\Users\\SSAFY\\Desktop\\Neural-Style-Transfer', 'C:\\Users\\SSAFY\\Desktop\\Neural-Style-Transfer', 'C:/Users/SSAFY/Desktop/Neural-Style-Transfer'])
+Python 3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.34.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 7.34.0
+Python 3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)] on win32
+runfile('C:/Users/SSAFY/Desktop/Neural-Style-Transfer/test.py', wdir='C:/Users/SSAFY/Desktop/Neural-Style-Transfer')
+2022-07-28 11:59:41.834162: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cudart64_110.dll
+<IPython.core.display.Image object>
+<IPython.core.display.Image object>
+2022-07-28 11:59:43.706409: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library nvcuda.dll
+2022-07-28 11:59:43.722739: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce RTX 2060 computeCapability: 7.5
+coreClock: 1.2GHz coreCount: 30 deviceMemorySize: 6.00GiB deviceMemoryBandwidth: 312.97GiB/s
+2022-07-28 11:59:43.723101: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cudart64_110.dll
+2022-07-28 11:59:43.726663: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cublas64_11.dll
+2022-07-28 11:59:43.726767: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cublasLt64_11.dll
+2022-07-28 11:59:43.728806: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cufft64_10.dll
+2022-07-28 11:59:43.729626: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library curand64_10.dll
+2022-07-28 11:59:43.730184: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusolver64_11.dll'; dlerror: cusolver64_11.dll not found
+2022-07-28 11:59:43.731604: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library cusparse64_11.dll
+2022-07-28 11:59:43.732067: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudnn64_8.dll'; dlerror: cudnn64_8.dll not found
+2022-07-28 11:59:43.732216: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1766] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2022-07-28 11:59:43.732760: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-07-28 11:59:43.733957: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1258] Device interconnect StreamExecutor with strength 1 edge matrix:
+2022-07-28 11:59:43.734159: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1264]      
+2022-07-28 11:59:44.704338: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:176] None of the MLIR Optimization Passes are enabled (registered 2)
+Iteration 100: loss=11024.23
+Iteration 200: loss=8518.74
+Iteration 300: loss=7573.89
+Iteration 400: loss=7063.17
+Iteration 500: loss=6734.10
+Iteration 600: loss=6498.64
+Iteration 700: loss=6319.51
+Iteration 800: loss=6177.37
+Iteration 900: loss=6060.83
+Iteration 1000: loss=5963.51
+C:\Users\SSAFY\.keras\datasets\paris.jpg
+C:\Users\SSAFY\.keras\datasets\starry_night.jpg
+<IPython.core.display.Image object>
+paris_generated
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\lib\site-packages\IPython\core\display.py", line 1300, in _data_and_metadata
+    b64_data = b2a_base64(self.data).decode('ascii')
+TypeError: a bytes-like object is required, not 'str'
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\lib\site-packages\IPython\core\formatters.py", line 224, in catch_format_error
+    r = method(self, *args, **kwargs)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\lib\site-packages\IPython\core\formatters.py", line 970, in __call__
+    return method(include=include, exclude=exclude)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\lib\site-packages\IPython\core\display.py", line 1290, in _repr_mimebundle_
+    data, metadata = self._data_and_metadata(always_both=True)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python37\lib\site-packages\IPython\core\display.py", line 1303, in _data_and_metadata
+    "No such file or directory: '%s'" % (self.data))
+FileNotFoundError: No such file or directory: 'paris_generated_at_iteration_1000.png'
