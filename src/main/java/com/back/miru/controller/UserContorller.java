@@ -134,9 +134,6 @@ public class UserContorller {
         int cnt = 0;
         System.out.println("checkPasswordFind 실행");
         cnt = userService.checkPasswordFind(id, email);
-        if (cnt == 1) {
-            userService.updatePassword(id);
-        }
         return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
     }
 

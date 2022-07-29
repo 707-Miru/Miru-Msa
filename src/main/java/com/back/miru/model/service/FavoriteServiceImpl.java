@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
     @Autowired
-    FavoriteDAO favoriteDAO;
+    private FavoriteDAO favoriteDAO;
 
     @Override
     public void registFavoriteUser(Map<String, String> map) throws Exception {
