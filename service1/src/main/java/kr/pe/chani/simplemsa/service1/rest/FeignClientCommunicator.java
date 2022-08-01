@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient("service2")
+/**
+ * 스프링 환경에서 간편하게 외부 api를 호출하는 feign client
+ *
+ * */
 public interface FeignClientCommunicator {
     @RequestMapping(
             method= RequestMethod.GET,
