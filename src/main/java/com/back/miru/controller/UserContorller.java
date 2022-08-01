@@ -41,10 +41,17 @@ public class UserContorller {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> registUser(@RequestBody Map<String, String> map) throws Exception {
+    public ResponseEntity<String> registUser(@RequestBody Map<String, String> map) throws Exception {
         System.out.println("resister controller 시작");
         userService.registUser(map);
-        return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        User loginUser = userService.loginUser(map.get("id"), map.get("password"));
+        String token = "";
+        if (loginUser != null) {
+            token = jwtService.create("id", loginUser.getId(), "token");
+            return new ResponseEntity<String>(token, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(token, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @ApiOperation(value = "회원정보수정", notes = "", response = Map.class)
