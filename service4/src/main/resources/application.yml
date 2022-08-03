@@ -1,0 +1,61 @@
+server:
+  port: 8793
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: service4 #스프링 컨피그의 디렉토리명 과 일치해야 함
+  profiles:
+    active:
+      default
+  main:
+    allow-bean-definition-overriding: 'true'
+    servlet:
+      multipart:
+        max-file-size: 5MB
+        max-request-size: 5MB
+    datasource:
+      password: ssafy
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ssafy
+      url: jdbc:mysql://127.0.0.1:3306/miru?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    mvc:
+      pathmatch:
+        matching-strategy: ANT_PATH_MATCHER
+
+mybatis:
+  type-aliases-package: com.back.miru.model
+  mapper-locations: mapper/**/*.xml
+external:
+  email:
+    username: js97621@gmail.com
+    password: fdniriemwghmjapx
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true # 유레카 서비스에 등록 여부
+    fetch-registry: true
+    registryFetchIntervalSeconds: 5 # eureka에게 서비스 정보를 가져오는 주기
+    disable-delta: true # eureka에게 서비스 정보를 가져올때 변경된 내용만 가져온다. (false로 하면 전체를 가져오기에 대역폭 낭비이다.)
+    serviceUrl:
+      defaultZone: http://localhost:8788/eureka/
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com:
+      back:
+        miru:
+          controller: debug
+    root: info
