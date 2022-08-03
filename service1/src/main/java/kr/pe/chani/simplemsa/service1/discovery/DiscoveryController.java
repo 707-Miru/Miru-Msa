@@ -32,11 +32,11 @@ public class DiscoveryController {
     }
 
     //커스텀 헤더값은 이런식으로 꺼내오기
-    @GetMapping(value = "/ribbon/{id}")
-    public String ribbon(@PathVariable("id") String id, @RequestHeader("foo") String foo) {
-        log.info("Http Header foo : {}", foo);
-        return discoveryService.ribbon(id);
-    }
+//    @GetMapping(value = "/ribbon/{id}")
+//    public String ribbon(@PathVariable("id") String id, @RequestHeader("foo") String foo) {
+//        log.info("Http Header foo : {}", foo);
+//        return discoveryService.ribbon(id);
+//    }
 
     @GetMapping(value = "/feign/{id}")
     public String feign(@PathVariable("id") String id) {
